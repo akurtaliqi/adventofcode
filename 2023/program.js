@@ -3,39 +3,36 @@ var input = require('fs').createReadStream('./data/day_1.txt');
 
 var promise = new Promise(function(resolve, reject) {
     var finalResult = 0;
-  var lineReader = require('readline').createInterface({
-    input: input
-  });
-  input.on('end', () => {
-    resolve("I reached the end!");
-  });
+    var lineReader = require('readline').createInterface({
+        input: input
+    });
+    
+    input.on('end', () => {
+        resolve(finalResult);
+    });
+    
+    lineReader.on('line', (line) => {
+        var extractNumbers = line.replace(/\D/g, "");
+        var toAdd;
 
-  lineReader.on('line', (line) => {
-    // DO STH. WITH EACH LINE (IF DESIRED)
-    //console.log(line);
-    var thenum = line.replace(/\D/g, "");
-    var toAdd;
-    if (thenum.length == 1) {
-        // finalResult = finalResult + thenum + thenum;
-        toAdd = thenum.concat('', thenum);
-        finalResult = finalResult + Number(toAdd);
-    }
-    if (thenum.length == 2) {
-        finalResult = finalResult + Number(thenum);
-    }
-    if (thenum.length > 2) {
-        finalResult = finalResult;
-        let firstChar = thenum.substring(0, 1); 
-        let lastChar = thenum.substring(thenum.length - 1); 
-        toAdd = firstChar.concat('', lastChar);
-        finalResult = finalResult + Number(toAdd);
-    }
-    // console.log(thenum);
-    console.log("final result", finalResult);
+        if (extractNumbers.length == 1) {
+            toAdd = extractNumbers.concat('', extractNumbers);
+            finalResult = finalResult + Number(toAdd);
+        }
+        
+        if (extractNumbers.length == 2) {
+            finalResult = finalResult + Number(extractNumbers);
+        }
+
+        if (extractNumbers.length > 2) {
+            var firstChar = extractNumbers.substring(0, 1); 
+            var lastChar = extractNumbers.substring(extractNumbers.length - 1); 
+            toAdd = firstChar.concat('', lastChar);
+            finalResult = finalResult + Number(toAdd);
+        }
   });
 });
 
 promise.then((resolveResult) => {
-  // DO WHATEVER YOU WANT TO DO AFTER
-  console.log(resolveResult);
+  console.log("Day 1 answer : ", resolveResult);
 });
