@@ -13,11 +13,9 @@ var promise = new Promise(function(resolve, reject) {
     
     lineReader.on('line', (line) => {
         var extractNumbers = line.replace(/\D/g, "");
-        var toAdd;
 
         if (extractNumbers.length == 1) {
-            toAdd = extractNumbers.concat('', extractNumbers);
-            finalResult = finalResult + Number(toAdd);
+            finalResult = finalResult + Number(extractNumbers.concat('', extractNumbers));
         }
         
         if (extractNumbers.length == 2) {
@@ -25,10 +23,9 @@ var promise = new Promise(function(resolve, reject) {
         }
 
         if (extractNumbers.length > 2) {
-            var firstChar = extractNumbers.substring(0, 1); 
-            var lastChar = extractNumbers.substring(extractNumbers.length - 1); 
-            toAdd = firstChar.concat('', lastChar);
-            finalResult = finalResult + Number(toAdd);
+            finalResult = finalResult + Number(
+                extractNumbers.substring(0, 1).concat('', extractNumbers.substring(extractNumbers.length - 1))
+            );
         }
   });
 });
